@@ -14,5 +14,7 @@ namespace FinancialBuddy.Application.DTOs.Subscription
         public decimal Amount { get; set; }
         public DateTime NextPaymentDate { get; set; }
         public string Frequency { get; set; }
+        public bool IsAutoPayment { get; set; }
+
     }
 }

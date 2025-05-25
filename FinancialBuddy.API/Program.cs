@@ -100,4 +100,9 @@ RecurringJob.AddOrUpdate<TransferJob>(
     job => job.ProcessScheduledTransfers(),
     Cron.Daily);
 
+RecurringJob.AddOrUpdate<SubscriptionAutoPaymentJob>(
+    "SubscriptionAutoPaymentJob",
+    job => job.ProcessAutoPayments(),
+    Cron.Daily);
+
 app.Run();

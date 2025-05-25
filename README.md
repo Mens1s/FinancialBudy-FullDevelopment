@@ -32,9 +32,9 @@
 ❌ Yatırım önerileri (risk profiline uygun)
 
 6️⃣ Otomatik Ödeme Talimatları
-❌ Kira, fatura, telefon, internet vb. için otomatik ödeme talimatı oluşturma
-❌ Talimat listeleme, düzenleme, silme
-❌ Hangfire job’ları ile belirli zamanda ödemeleri gerçekleştirme
+✅ Kira, fatura, telefon, internet vb. için otomatik ödeme talimatı oluşturma
+✅ Talimat listeleme, düzenleme, silme
+✅ Hangfire job’ları ile belirli zamanda ödemeleri gerçekleştirme
 
 7️⃣ Abonelik ve Fatura Takibi
 ✅ Kullanıcının tüm aboneliklerini (Netflix, Spotify, vs.) listeleme
