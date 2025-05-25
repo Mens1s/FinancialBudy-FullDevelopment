@@ -11,5 +11,7 @@ namespace FinancialBuddy.Application.DTOs.User
         public Guid Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
+        public bool IsRoundUpEnabled { get; set; }
+        public decimal SavingBalance { get; set; }
     }
 }

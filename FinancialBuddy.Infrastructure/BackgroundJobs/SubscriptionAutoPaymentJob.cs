@@ -21,6 +21,7 @@ namespace FinancialBuddy.Infrastructure.BackgroundJobs
 
         public async Task ProcessAutoPayments()
         {
+
             var today = DateTime.UtcNow.Date;
 
             var activeSubs = await _subscriptionRepository.FindAsync(s =>
@@ -31,7 +32,17 @@ namespace FinancialBuddy.Infrastructure.BackgroundJobs
                 var user = await _userRepository.GetByIdAsync(sub.UserId);
                 if (user != null && user.Balance >= sub.Amount)
                 {
-                    user.Balance -= sub.Amount;
+                    var roundUpAmount = 0m;
+                    var rounded = Math.Ceiling(sub.Amount / 100) * 100;
+
+                    if (user.IsRoundUpEnabled && user.Balance >= rounded)   
+                    { 
+                        roundUpAmount = rounded - sub.Amount;
+                        user.SavingBalance += roundUpAmount;
+                        Console.WriteLine($"[AutoPaymentJob] Rounded Payment Processed {sub.ServiceName} for {user.Email}, Amount: {roundUpAmount}");
+                    }
+
+                    user.Balance -= sub.Amount + roundUpAmount;
                     sub.NextPaymentDate = sub.Frequency == "Monthly"
                         ? sub.NextPaymentDate.AddMonths(1)
                         : sub.NextPaymentDate.AddYears(1);
