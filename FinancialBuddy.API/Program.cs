@@ -49,6 +49,7 @@ builder.Services.AddHangfireServer();
 
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ITransferService, TransferService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 
 // Add services to the container.
 builder.Services.AddOpenApi();
