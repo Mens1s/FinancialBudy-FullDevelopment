@@ -1,10 +1,12 @@
 using FinancialBuddy.Application.Interfaces.Services;
+using FinancialBuddy.Application.Mappings;
 using FinancialBuddy.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // custom di
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 // Add services to the container.
 builder.Services.AddOpenApi();

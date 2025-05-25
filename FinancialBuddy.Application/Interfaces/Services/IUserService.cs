@@ -1,4 +1,5 @@
-﻿using FinancialBuddy.Domain.Entities;
+﻿using FinancialBuddy.Application.DTOs.User;
+using FinancialBuddy.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace FinancialBuddy.Application.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> GetUserByIdAsync(Guid id);
-        Task<User> CreateUserAsync(User user);
-        Task UpdateUserAsync(User user);
+        Task<IEnumerable<UserDto>> GetAllUsersAsync();
+        Task<UserDto> GetUserByIdAsync(Guid id);
+        Task<UserDto> CreateUserAsync(CreateUserRequest request);
+        Task UpdateUserAsync(UpdateUserRequest request);
         Task DeleteUserAsync(Guid id);
     }
 }
