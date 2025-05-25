@@ -1,6 +1,10 @@
+using FinancialBuddy.Application.Interfaces.Services;
 using FinancialBuddy.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// custom di
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Add services to the container.
 builder.Services.AddOpenApi();

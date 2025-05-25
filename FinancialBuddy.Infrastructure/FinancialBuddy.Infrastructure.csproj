@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FinancialBuddy.Domain\FinancialBuddy.Domain.csproj" />
     <ProjectReference Include="..\FinancialBuddy.Shared\FinancialBuddy.Shared.csproj" />
+    <ProjectReference Include="..\FinancialBuddy.Application\FinancialBuddy.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

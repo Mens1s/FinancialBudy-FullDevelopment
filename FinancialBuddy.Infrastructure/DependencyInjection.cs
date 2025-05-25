@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FinancialBuddy.Application.Interfaces.Repositories;
 
 namespace FinancialBuddy.Infrastructure
 {
@@ -12,6 +13,8 @@ namespace FinancialBuddy.Infrastructure
             services.AddDbContext<FinancialBuddyDbContext>(
                 options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;
         }
