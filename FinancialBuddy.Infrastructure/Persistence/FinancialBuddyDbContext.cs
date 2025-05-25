@@ -19,6 +19,8 @@ namespace FinancialBuddy.Infrastructure.Persistence
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Goal> Goals { get; set; }
+        public DbSet<UserAsset> UserAssets { get; set; }
+        public DbSet<ValueAsset> ValueAssets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +49,16 @@ namespace FinancialBuddy.Infrastructure.Persistence
                 .HasOne(g => g.User)
                 .WithMany(u => u.Goals)
                 .HasForeignKey(g => g.UserId);
+
+            modelBuilder.Entity<UserAsset>()
+                .HasOne(ua => ua.User)
+                .WithMany(u => u.UserAssets)
+                .HasForeignKey(ua => ua.UserId);
+
+            modelBuilder.Entity<UserAsset>()
+                .HasOne(ua => ua.Asset)
+                .WithMany()
+                .HasForeignKey(ua => ua.AssetId);
 
         }
     }

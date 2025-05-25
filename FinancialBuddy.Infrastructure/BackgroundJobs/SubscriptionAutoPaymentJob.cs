@@ -44,9 +44,10 @@ namespace FinancialBuddy.Infrastructure.BackgroundJobs
                 else
                 {
                     Console.WriteLine($"[AutoPaymentJob] Failed: Insufficient balance or user not found for {sub.ServiceName}");
+                    // rabbitmq eklenerek aslında mesaj her türlü kullanıcıya login yapıtğında ulaştırılabilir.
                 }
             }
-
+            await _userRepository.SaveChangesAsync();
             await _subscriptionRepository.SaveChangesAsync();
         }
     }

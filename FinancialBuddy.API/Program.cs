@@ -52,6 +52,7 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ITransferService, TransferService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<IGoalService, GoalService>();
+builder.Services.AddScoped<IUserAssetService, UserAssetService>();
 
 
 // Add services to the container.
@@ -84,11 +85,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Recurring Jobs
+/*
 RecurringJob.AddOrUpdate<PaymentJob>(
     "AutoPaymentJob",
     job => job.ProcessPayments(),
     Cron.Daily);
-
+*/
 RecurringJob.AddOrUpdate<MockBankJob>(
     "MockBankDebtSyncJob",
     job => job.SyncCreditCardDebts(),
@@ -104,5 +106,10 @@ RecurringJob.AddOrUpdate<SubscriptionAutoPaymentJob>(
     "SubscriptionAutoPaymentJob",
     job => job.ProcessAutoPayments(),
     Cron.Daily);
+
+RecurringJob.AddOrUpdate<AssetPriceJob>(
+    "AssetPriceUpdateJob",
+    job => job.UpdateAssetPrices(),
+    "*/10 * * * *"); // her 10 dakikada bir
 
 app.Run();

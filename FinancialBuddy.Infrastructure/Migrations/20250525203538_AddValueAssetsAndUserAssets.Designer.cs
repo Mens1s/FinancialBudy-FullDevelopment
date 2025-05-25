@@ -4,6 +4,7 @@ using FinancialBuddy.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinancialBuddy.Infrastructure.Migrations
 {
     [DbContext(typeof(FinancialBuddyDbContext))]
-    partial class FinancialBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525203538_AddValueAssetsAndUserAssets")]
+    partial class AddValueAssetsAndUserAssets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,58 +191,6 @@ namespace FinancialBuddy.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FinancialBuddy.Domain.Entities.UserAsset", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AssetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("AveragePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserAssets");
-                });
-
-            modelBuilder.Entity("FinancialBuddy.Domain.Entities.ValueAsset", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("CurrentPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ValueAssets");
-                });
-
             modelBuilder.Entity("FinancialBuddy.Domain.Entities.Goal", b =>
                 {
                     b.HasOne("FinancialBuddy.Domain.Entities.User", "User")
@@ -284,25 +235,6 @@ namespace FinancialBuddy.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FinancialBuddy.Domain.Entities.UserAsset", b =>
-                {
-                    b.HasOne("FinancialBuddy.Domain.Entities.ValueAsset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FinancialBuddy.Domain.Entities.User", "User")
-                        .WithMany("UserAssets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Asset");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("FinancialBuddy.Domain.Entities.User", b =>
                 {
                     b.Navigation("Goals");
@@ -312,8 +244,6 @@ namespace FinancialBuddy.Infrastructure.Migrations
                     b.Navigation("Transactions");
 
                     b.Navigation("Transfers");
-
-                    b.Navigation("UserAssets");
                 });
 #pragma warning restore 612, 618
         }

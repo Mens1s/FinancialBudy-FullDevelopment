@@ -19,5 +19,6 @@ namespace FinancialBuddy.Domain.Entities
         public ICollection<Transfer> Transfers { get; set; }
         public ICollection<Subscription> Subscriptions { get; set; }
         public ICollection<Goal> Goals { get; set; }
+        public ICollection<UserAsset> UserAssets { get; set; }
     }
 }

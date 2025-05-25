@@ -4,6 +4,7 @@ using FinancialBuddy.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinancialBuddy.Infrastructure.Migrations
 {
     [DbContext(typeof(FinancialBuddyDbContext))]
-    partial class FinancialBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525204325_AddUserAssetsTable")]
+    partial class AddUserAssetsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
