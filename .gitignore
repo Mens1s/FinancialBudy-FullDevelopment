@@ -1,0 +1,52 @@
+## .NET
+## Genel ayarlar
+bin/
+obj/
+out/
+*.user
+*.suo
+*.userprefs
+*.csproj.user
+*.rsuser
+*.vsp
+*.pdb
+*.cache
+*.log
+
+## Rider ve JetBrains IDE’leri
+.idea/
+*.sln.iml
+
+## Visual Studio
+.vs/
+*.ncb
+*.sdf
+*.opensdf
+*.sln.docstates
+
+## Paketler
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## DotCover
+*.dotCover
+
+## Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+## SonarQube
+.sonar/
+
+## Test Sonuçları
+TestResults/
+*.trx
+
+## Publish
+publish/
+*.publish.xml
+
+##
