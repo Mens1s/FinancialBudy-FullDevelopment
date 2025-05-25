@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialBuddy.API", "FinancialBuddy.API\FinancialBuddy.API.csproj", "{AC1B33E8-4368-4A8C-9875-93015AB17986}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialBuddy.Application", "FinancialBuddy.Application\FinancialBuddy.Application.csproj", "{91BAE987-6792-4356-8598-184F09FEE97A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialBuddy.Domain", "FinancialBuddy.Domain\FinancialBuddy.Domain.csproj", "{EC285FAF-1311-4776-A561-3C2C530D7045}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialBuddy.Infrastructure", "FinancialBuddy.Infrastructure\FinancialBuddy.Infrastructure.csproj", "{22234027-C6A4-4E59-834F-2FD452F4F8ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialBuddy.Shared", "FinancialBuddy.Shared\FinancialBuddy.Shared.csproj", "{09C60387-F56D-49E6-B21D-F76AE15D1604}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC1B33E8-4368-4A8C-9875-93015AB17986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC1B33E8-4368-4A8C-9875-93015AB17986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC1B33E8-4368-4A8C-9875-93015AB17986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC1B33E8-4368-4A8C-9875-93015AB17986}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91BAE987-6792-4356-8598-184F09FEE97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91BAE987-6792-4356-8598-184F09FEE97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91BAE987-6792-4356-8598-184F09FEE97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91BAE987-6792-4356-8598-184F09FEE97A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC285FAF-1311-4776-A561-3C2C530D7045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC285FAF-1311-4776-A561-3C2C530D7045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC285FAF-1311-4776-A561-3C2C530D7045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC285FAF-1311-4776-A561-3C2C530D7045}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22234027-C6A4-4E59-834F-2FD452F4F8ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22234027-C6A4-4E59-834F-2FD452F4F8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22234027-C6A4-4E59-834F-2FD452F4F8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22234027-C6A4-4E59-834F-2FD452F4F8ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C60387-F56D-49E6-B21D-F76AE15D1604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C60387-F56D-49E6-B21D-F76AE15D1604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C60387-F56D-49E6-B21D-F76AE15D1604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C60387-F56D-49E6-B21D-F76AE15D1604}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

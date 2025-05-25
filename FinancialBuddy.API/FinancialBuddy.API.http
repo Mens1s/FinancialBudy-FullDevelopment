@@ -1,0 +1,6 @@
+@FinancialBuddy.API_HostAddress = http://localhost:5069
+
+GET {{FinancialBuddy.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
