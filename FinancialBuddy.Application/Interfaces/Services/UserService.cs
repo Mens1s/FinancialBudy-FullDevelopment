@@ -38,8 +38,16 @@ namespace FinancialBuddy.Application.Interfaces.Services
 
         public async Task UpdateUserAsync(UpdateUserRequest request)
         {
-            var user = _mapper.Map<User>(request);
-            _userRepository.Update(user);
+            var user = await _userRepository.GetByIdAsync(request.Id);
+
+            if (user == null)
+                throw new Exception("User not found.");
+
+            if (!string.IsNullOrEmpty(request.Password))
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            _mapper.Map(request, user);
+
             await _userRepository.SaveChangesAsync();
         }
 

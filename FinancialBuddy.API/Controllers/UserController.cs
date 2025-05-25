@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using FinancialBuddy.API.Filters;
 using FinancialBuddy.Application.DTOs.User;
 using FinancialBuddy.Application.Interfaces.Services;
 using FinancialBuddy.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinancialBuddy.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize] // sadece giriş yapmış kullanıcılar erişsin..
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -20,6 +23,7 @@ namespace FinancialBuddy.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")] // only Admin 
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -36,23 +40,19 @@ namespace FinancialBuddy.API.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateUserRequest request)
-        {
-            var createdUser = await _userService.CreateUserAsync(request);
-            return CreatedAtAction(nameof(GetById), new { id = createdUser.Id }, createdUser);
-        }
-
         [HttpPut("{id}")]
+        [AuthorizeOwner] // baya iyi oldu beğendim ben :D
         public async Task<IActionResult> Update(Guid id, UpdateUserRequest request)
         {
             if (id != request.Id)
                 return BadRequest();
+
             await _userService.UpdateUserAsync(request);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
+        [AuthorizeOwner]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _userService.DeleteUserAsync(id);
