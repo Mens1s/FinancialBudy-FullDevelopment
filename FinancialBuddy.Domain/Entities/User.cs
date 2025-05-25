@@ -13,6 +13,7 @@ namespace FinancialBuddy.Domain.Entities
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Role { get; set; } = "User";
+        public decimal Balance { get; set; } = 0m;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public ICollection<Transaction> Transactions { get; set; }
         public ICollection<Transfer> Transfers { get; set; }

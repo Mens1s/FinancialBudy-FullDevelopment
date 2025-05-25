@@ -1,5 +1,4 @@
-﻿using FinancialBuddy.API.Filters;
-using FinancialBuddy.Application.DTOs.Transfer;
+﻿using FinancialBuddy.Application.DTOs.Goal;
 using FinancialBuddy.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,60 +6,60 @@ using System.Security.Claims;
 
 namespace FinancialBuddy.API.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class TransferController : ControllerBase
+    public class GoalController : ControllerBase
     {
-        private readonly ITransferService _transferService;
+        private readonly IGoalService _goalService;
 
-        public TransferController(ITransferService transferService)
+        public GoalController(IGoalService goalService)
         {
-            _transferService = transferService;
+            _goalService = goalService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var transfers = await _transferService.GetAllTransfersAsync(userId);
-            return Ok(transfers);
+            var goals = await _goalService.GetAllGoalsAsync(userId);
+            return Ok(goals);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var transfer = await _transferService.GetTransferByIdAsync(id);
-            if (transfer == null)
+            var goal = await _goalService.GetGoalByIdAsync(id);
+            if (goal == null)
                 return NotFound();
 
-            return Ok(transfer);
+            return Ok(goal);
         }
 
         [HttpPost]
-        // [AuthorizeOwner] eklicem TODO
-        public async Task<IActionResult> Create(CreateTransferRequest request)
+        public async Task<IActionResult> Create(CreateGoalRequest request)
         {
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             request.UserId = userId;
-            var created = await _transferService.CreateTransferAsync(request);
+            var created = await _goalService.CreateGoalAsync(request);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, UpdateTransferRequest request)
+        public async Task<IActionResult> Update(Guid id, UpdateGoalRequest request)
         {
             if (id != request.Id)
                 return BadRequest();
 
-            await _transferService.UpdateTransferAsync(request);
+            await _goalService.UpdateGoalAsync(request);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _transferService.DeleteTransferAsync(id);
+            await _goalService.DeleteGoalAsync(id);
             return NoContent();
         }
     }

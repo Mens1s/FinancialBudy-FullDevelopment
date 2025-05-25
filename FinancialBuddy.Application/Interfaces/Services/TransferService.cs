@@ -8,11 +8,13 @@ namespace FinancialBuddy.Application.Interfaces.Services
     public class TransferService : ITransferService
     {
         private readonly IGenericRepository<Transfer> _transferRepository;
+        private readonly IGenericRepository<User> _userRepository;
         private readonly IMapper _mapper;
 
-        public TransferService(IGenericRepository<Transfer> transferRepository, IMapper mapper)
+        public TransferService(IGenericRepository<Transfer> transferRepository, IGenericRepository<User> userRepository, IMapper mapper)
         {
             _transferRepository = transferRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -26,13 +28,42 @@ namespace FinancialBuddy.Application.Interfaces.Services
         {
             var transfer = await _transferRepository.GetByIdAsync(id);
             return _mapper.Map<TransferDto>(transfer);
-        }
-
+        }        
         public async Task<TransferDto> CreateTransferAsync(CreateTransferRequest request)
         {
+            var sender = await _userRepository.GetByIdAsync(request.UserId);
+            var receiver = await _userRepository.GetByIdAsync(request.ReceiverUserId);
+
+            if (sender == null || receiver == null)
+                throw new Exception("Sender or receiver not found.");
+
+            if (request.Amount <= 0)
+                throw new Exception("Invalid amount.");
+
+            if (sender.Balance < request.Amount)
+                throw new Exception("Insufficient balance.");
+
+            if(request.IsFast && sender.Balance < (request.Amount * 1.02m))
+                throw new Exception("Insufficient balance. Fast Operations takes commision.");
+
             var transfer = _mapper.Map<Transfer>(request);
+
+            if (request.IsFast)
+            {
+                sender.Balance -= request.Amount * 1.02m;
+                receiver.Balance += request.Amount;
+                transfer.IsCompleted = true;
+            }
+            else
+            {
+                transfer.IsCompleted = false;
+            }
+
             await _transferRepository.AddAsync(transfer);
+            _userRepository.Update(sender);
+            _userRepository.Update(receiver);
             await _transferRepository.SaveChangesAsync();
+
             return _mapper.Map<TransferDto>(transfer);
         }
 
@@ -41,8 +72,6 @@ namespace FinancialBuddy.Application.Interfaces.Services
             var transfer = await _transferRepository.GetByIdAsync(request.Id);
             if (transfer != null)
             {
-                transfer.FromAccount = request.FromAccount;
-                transfer.ToAccount = request.ToAccount;
                 transfer.Amount = request.Amount;
                 transfer.Date = request.Date;
                 transfer.Description = request.Description;

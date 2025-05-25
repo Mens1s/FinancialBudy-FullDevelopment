@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Hangfire;
 using Hangfire.SqlServer;
+using FinancialBuddy.Infrastructure.BackgroundJobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,8 @@ builder.Services.AddHangfireServer();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ITransferService, TransferService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+builder.Services.AddScoped<IGoalService, GoalService>();
+
 
 // Add services to the container.
 builder.Services.AddOpenApi();
@@ -79,5 +82,22 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Recurring Jobs
+RecurringJob.AddOrUpdate<PaymentJob>(
+    "AutoPaymentJob",
+    job => job.ProcessPayments(),
+    Cron.Daily);
+
+RecurringJob.AddOrUpdate<MockBankJob>(
+    "MockBankDebtSyncJob",
+    job => job.SyncCreditCardDebts(),
+    Cron.Hourly);
+
+
+RecurringJob.AddOrUpdate<TransferJob>(
+    "ScheduledTransferJob",
+    job => job.ProcessScheduledTransfers(),
+    Cron.Daily);
 
 app.Run();

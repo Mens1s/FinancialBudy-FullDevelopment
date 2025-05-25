@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FinancialBuddy.Application.Interfaces.Repositories;
+using FinancialBuddy.Infrastructure.BackgroundJobs;
 
 namespace FinancialBuddy.Infrastructure
 {
@@ -15,6 +16,10 @@ namespace FinancialBuddy.Infrastructure
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+
+            services.AddScoped<PaymentJob>();
+            services.AddScoped<MockBankJob>();
 
             return services;
         }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FinancialBuddy.Application.DTOs.Goal;
 using FinancialBuddy.Application.DTOs.Subscription;
 using FinancialBuddy.Application.DTOs.Transaction;
 using FinancialBuddy.Application.DTOs.Transfer;
@@ -21,6 +22,8 @@ namespace FinancialBuddy.Application.Mappings
             CreateMap<CreateTransferRequest, Transfer>();
             CreateMap<Subscription, SubscriptionDto>();
             CreateMap<CreateSubscriptionRequest, Subscription>();
+            CreateMap<Goal, GoalDto>();
+            CreateMap<CreateGoalRequest, Goal>();
         }
     }
 }

@@ -4,6 +4,7 @@ using FinancialBuddy.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinancialBuddy.Infrastructure.Migrations
 {
     [DbContext(typeof(FinancialBuddyDbContext))]
-    partial class FinancialBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525194656_AddBalanceAndTransferFields")]
+    partial class AddBalanceAndTransferFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,6 +133,10 @@ namespace FinancialBuddy.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FromAccount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 
@@ -138,6 +145,10 @@ namespace FinancialBuddy.Infrastructure.Migrations
 
                     b.Property<Guid>("ReceiverUserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ToAccount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
