@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FinancialBuddy.Application.DTOs.Transaction;
+using FinancialBuddy.Application.DTOs.Transfer;
 using FinancialBuddy.Application.DTOs.User;
 using FinancialBuddy.Domain.Entities;
 
@@ -15,6 +16,8 @@ namespace FinancialBuddy.Application.Mappings
             CreateMap<UpdateUserRequest, User>();
             CreateMap<Transaction, TransactionDto>();
             CreateMap<CreateTransactionRequest, Transaction>();
+            CreateMap<Transfer, TransferDto>();
+            CreateMap<CreateTransferRequest, Transfer>();
         }
     }
 }
