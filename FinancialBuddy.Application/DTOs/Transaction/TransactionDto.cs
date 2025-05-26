@@ -8,8 +8,8 @@ namespace FinancialBuddy.Application.DTOs.Transaction
 {
     public class TransactionDto
     {
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
+        public Guid Id { get; set; } // verici ana hesap
+        public Guid UserId { get; set; } // alici ana hesap
         public string Category { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }

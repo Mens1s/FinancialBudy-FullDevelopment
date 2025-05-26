@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FinancialBuddy.Application.DTOs.Asset;
+using FinancialBuddy.Application.DTOs.Transaction;
 using FinancialBuddy.Application.Interfaces.Repositories;
 using FinancialBuddy.Domain.Entities;
 using System;
@@ -15,18 +16,21 @@ namespace FinancialBuddy.Application.Interfaces.Services
         private readonly IGenericRepository<UserAsset> _userAssetRepository;
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<ValueAsset> _valueAssetRepository;
+        private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
 
         public UserAssetService(
             IGenericRepository<UserAsset> userAssetRepository,
             IGenericRepository<User> userRepository,
             IGenericRepository<ValueAsset> valueAssetRepository,
+            ITransactionService transactionService,
             IMapper mapper)
         {
             _userAssetRepository = userAssetRepository;
             _userRepository = userRepository;
             _valueAssetRepository = valueAssetRepository;
             _mapper = mapper;
+            _transactionService = transactionService;
         }
 
         public async Task<IEnumerable<UserAssetDto>> GetPortfolioAsync(Guid userId)
@@ -79,6 +83,15 @@ namespace FinancialBuddy.Application.Interfaces.Services
             user.Balance -= totalCost;
             _userRepository.Update(user);
 
+            _transactionService.CreateTransactionAsync(new CreateTransactionRequest
+            {
+                UserId = user.Id,
+                Amount = totalCost,
+                Description = $"Bought {request.Quantity} of {asset.Name}",
+                Category = "Asset Purchase",
+                Date = DateTime.UtcNow
+            }).GetAwaiter().GetResult();
+
             // bi tek ortama çekmek lazım bunları iki iki yazıyoruz unutuluyor debuglada zor çıkıyo TODO:
             await _userRepository.SaveChangesAsync();
             await _userAssetRepository.SaveChangesAsync();
@@ -104,6 +117,15 @@ namespace FinancialBuddy.Application.Interfaces.Services
 
             user.Balance += totalSale;
             _userRepository.Update(user);
+
+            _transactionService.CreateTransactionAsync(new CreateTransactionRequest
+            {
+                UserId = user.Id,
+                Amount = totalSale,
+                Description = $"Sell {request.Quantity} of {asset.Name}",
+                Category = "Asset Purchase",
+                Date = DateTime.UtcNow
+            }).GetAwaiter().GetResult();
 
             await _userRepository.SaveChangesAsync();
             await _userAssetRepository.SaveChangesAsync();

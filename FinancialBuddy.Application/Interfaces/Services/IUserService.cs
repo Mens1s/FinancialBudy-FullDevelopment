@@ -15,5 +15,6 @@ namespace FinancialBuddy.Application.Interfaces.Services
         Task<UserDto> CreateUserAsync(CreateUserRequest request);
         Task UpdateUserAsync(UpdateUserRequest request);
         Task DeleteUserAsync(Guid id);
+        Task<UserDashboardGeneralInfoDto> GetDashboardInfo(Guid id);
     }
 }

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using FinancialBuddy.API.Filters;
 using FinancialBuddy.Application.DTOs.User;
 using FinancialBuddy.Application.Interfaces.Services;
 using FinancialBuddy.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FinancialBuddy.API.Controllers
 {
@@ -40,13 +42,11 @@ namespace FinancialBuddy.API.Controllers
             return Ok(user);
         }
 
-        [HttpPut("{id}")]
-        [AuthorizeOwner] // baya iyi oldu beğendim ben :D
-        public async Task<IActionResult> Update(Guid id, UpdateUserRequest request)
+        [HttpPut]
+        //[AuthorizeOwner] // baya iyi oldu beğendim ben :D
+        public async Task<IActionResult> Update(UpdateUserRequest request)
         {
-            if (id != request.Id)
-                return BadRequest();
-
+            request.Id = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             await _userService.UpdateUserAsync(request);
             return NoContent();
         }
@@ -57,6 +57,17 @@ namespace FinancialBuddy.API.Controllers
         {
             await _userService.DeleteUserAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("getDashboardInformation")]
+        public async Task<IActionResult> GetById()
+        {
+            var guid = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userData = await _userService.GetDashboardInfo(guid);
+            if (userData == null)
+                return NotFound();
+
+            return Ok(userData);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FinancialBuddy.Application.Interfaces.Repositories;
+using FinancialBuddy.Application.Interfaces.Services;
 using FinancialBuddy.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,14 @@ namespace FinancialBuddy.Infrastructure.BackgroundJobs
     {
         private readonly IGenericRepository<Subscription> _subscriptionRepository;
         private readonly IGenericRepository<User> _userRepository;
+        private readonly ITransactionService _transactionService;
 
-        public SubscriptionAutoPaymentJob(IGenericRepository<Subscription> subscriptionRepository, IGenericRepository<User> userRepository)
+        public SubscriptionAutoPaymentJob(IGenericRepository<Subscription> subscriptionRepository, IGenericRepository<User> userRepository,
+            ITransactionService transactionService)
         {
             _subscriptionRepository = subscriptionRepository;
             _userRepository = userRepository;
+            _transactionService = transactionService;
         }
 
         public async Task ProcessAutoPayments()
@@ -49,6 +53,14 @@ namespace FinancialBuddy.Infrastructure.BackgroundJobs
 
                     _userRepository.Update(user);
                     _subscriptionRepository.Update(sub);
+                    _transactionService.CreateTransactionAsync(new Application.DTOs.Transaction.CreateTransactionRequest
+                    {
+                        UserId = user.Id,
+                        Amount = sub.Amount + roundUpAmount,
+                        Description = $"Auto payment for {sub.ServiceName}",
+                        Category = "Debit",
+                        Date = DateTime.UtcNow
+                    }).GetAwaiter().GetResult();
 
                     Console.WriteLine($"[AutoPaymentJob] Processed {sub.ServiceName} for {user.Email}, Amount: {sub.Amount}");
                 }

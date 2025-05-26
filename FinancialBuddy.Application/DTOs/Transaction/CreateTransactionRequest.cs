@@ -8,7 +8,7 @@ namespace FinancialBuddy.Application.DTOs.Transaction
 {
     public class CreateTransactionRequest
     {
-        public Guid UserId { get; set; }
+        public Guid UserId { get; set; } // alici
         public string Category { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }

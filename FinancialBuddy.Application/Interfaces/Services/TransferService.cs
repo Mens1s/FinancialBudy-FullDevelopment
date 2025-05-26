@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FinancialBuddy.Application.DTOs.Transaction;
 using FinancialBuddy.Application.DTOs.Transfer;
 using FinancialBuddy.Application.Interfaces.Repositories;
 using FinancialBuddy.Domain.Entities;
@@ -9,12 +10,15 @@ namespace FinancialBuddy.Application.Interfaces.Services
     {
         private readonly IGenericRepository<Transfer> _transferRepository;
         private readonly IGenericRepository<User> _userRepository;
+        private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
 
-        public TransferService(IGenericRepository<Transfer> transferRepository, IGenericRepository<User> userRepository, IMapper mapper)
+        public TransferService(IGenericRepository<Transfer> transferRepository, IGenericRepository<User> userRepository,
+              ITransactionService transactionService, IMapper mapper)
         {
             _transferRepository = transferRepository;
             _userRepository = userRepository;
+            _transactionService = transactionService;
             _mapper = mapper;
         }
 
@@ -62,6 +66,25 @@ namespace FinancialBuddy.Application.Interfaces.Services
             await _transferRepository.AddAsync(transfer);
             _userRepository.Update(sender);
             _userRepository.Update(receiver);
+
+            _transactionService.CreateTransactionAsync(new CreateTransactionRequest
+            {
+                UserId = sender.Id,
+                Amount = request.Amount * (request.IsFast ? 1.02m : 1),
+                Description = $"Transfer to {receiver.Email}",
+                Category = "Transfer",
+                Date = DateTime.UtcNow
+            }).GetAwaiter().GetResult();
+
+            _transactionService.CreateTransactionAsync(new CreateTransactionRequest
+            {
+                UserId = receiver.Id,
+                Amount = request.Amount,
+                Description = $"Received transfer from {sender.Email}",
+                Category = "Transfer",
+                Date = DateTime.UtcNow
+            }).GetAwaiter().GetResult();
+
             await _transferRepository.SaveChangesAsync();
 
             return _mapper.Map<TransferDto>(transfer);
