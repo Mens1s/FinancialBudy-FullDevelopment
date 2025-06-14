@@ -1,99 +1,99 @@
-# 📊 Finansal Uygulama Özellikleri ve Durum Takibi (.NET)
+# 📊 Financial Application Features and Progress Tracking (.NET)
 
-## 1️⃣ Kullanıcı Yönetimi
+## 1️⃣ User Management
 
-- [x] Kullanıcı kaydı (register)
-- [x] Kullanıcı girişi (login, JWT token)
-- [x] Kullanıcı bilgilerini görme, güncelleme, silme  
-  _Not: Sadece kullanıcı kendi bilgilerini görebilir_
-- [ ] Parola sıfırlama (opsiyonel)
-- [x] Rollere göre yetkilendirme (admin / normal kullanıcı)
-
----
-
-## 2️⃣ Harcama Yönetimi (Transactions)
-
-- [x] Harcama ekleme, düzenleme, silme, listeleme
-- [x] Kategorilere göre harcamaları sınıflandırma (yemek, ulaşım, kira vs.)
-- [ ] Harcama raporları ve grafikler
-- [ ] Harcama analizi (AI destekli öneriler, örn. tasarruf noktaları)
+- [x] User registration (register)  
+- [x] User login (JWT token)  
+- [x] View, update, delete user information  
+  _Note: Only the user can view their own information_  
+- [ ] Password reset (optional)  
+- [x] Role-based authorization (admin / regular user)
 
 ---
 
-## 3️⃣ Para Transferleri (Transfers)
+## 2️⃣ Expense Management (Transactions)
 
-- [x] Kullanıcı hesapları arası transfer (şu an tek hesap var)
-- [x] Diğer kullanıcıya transfer
-- [x] isFast kontrolü (gece 12.00'de ya da komisyon karşılığı anlık transfer)
-- [x] Transfer geçmişi ve detayları
-
----
-
-## 4️⃣ Bankalarla Entegrasyon (Mock API)
-
-- [x] Kredi kartı borcu çekme
-- [x] Kredi borcu çekme
-- [ ] Banka bakiyesi sorgulama (mock API yazılacak)
-- [ ] Kredi teklifleri karşılaştırma
-- [ ] Mevduat/yatırım ürünleri karşılaştırma
-- [ ] Kredi skoru analizi ve öneriler
+- [x] Add, edit, delete, list expenses  
+- [x] Categorize expenses (food, transport, rent, etc.)  
+- [ ] Expense reports and charts  
+- [ ] Expense analysis (AI-supported suggestions, e.g., saving tips)
 
 ---
 
-## 5️⃣ Yatırım ve Finansal Piyasa Verileri
+## 3️⃣ Money Transfers (Transfers)
 
-- [x] Altın, gümüş, platin fiyatları (mock API yazılacak)
-- [x] BIST100, NASDAQ, DAX endeks verileri
-- [x] Kullanıcı portföy takibi
-- [ ] Yatırım önerileri (risk profiline uygun)
-
----
-
-## 6️⃣ Otomatik Ödeme Talimatları
-
-- [x] Kira, fatura, telefon, internet vb. için otomatik ödeme talimatı oluşturma
-- [x] Talimat listeleme, düzenleme, silme
-- [x] Hangfire job’ları ile belirli zamanda ödemeleri gerçekleştirme
+- [x] Transfer between user accounts (currently only one account exists)  
+- [x] Transfer to other users  
+- [x] isFast check (instant transfer at midnight or with commission)  
+- [x] Transfer history and details
 
 ---
 
-## 7️⃣ Abonelik ve Fatura Takibi
+## 4️⃣ Bank Integrations (Mock API)
 
-_Abonelik yönetimi ve otomatik ödeme talimatları benzer, sadece alan farkı var_
-
-- [x] Kullanıcının tüm aboneliklerini (Netflix, Spotify, vs.) listeleme
-- [x] Fatura takip ekranı (elektrik, su, doğalgaz, internet vs.)
-- [x] Yaklaşan ödeme tarihleri için bildirim/hatırlatma
-- [x] Gereksiz abonelikleri tespit ve iptal önerisi
-
----
-
-## 8️⃣ Hedef Bazlı Bütçeleme ve Tasarruf Planları
-
-- [x] Kullanıcının belirlediği hedefler (tatil, araba, eğitim) için bütçe planı oluşturma
-- [x] Aylık/haftalık tasarruf planı hazırlama
-- [x] Otomatik tasarruf kuralları (örn. round-up: küsuratları birikim hesabına atma)
+- [x] Retrieve credit card debt  
+- [x] Retrieve loan debt  
+- [ ] Bank balance inquiry (mock API to be written)  
+- [ ] Compare loan offers  
+- [ ] Compare deposit/investment products  
+- [ ] Credit score analysis and suggestions
 
 ---
 
-## 9️⃣ AI Destekli Finansal Öneriler
+## 5️⃣ Investment and Financial Market Data
 
-- [ ] Harcama alışkanlıklarına göre kişisel öneriler
-- [ ] Bütçe aşımı uyarıları
-- [ ] Kredi ve yatırım simülasyonları (hangi hareketin kredi skorunu nasıl etkiler)
-
----
-
-## 🔄 Arka Plan ve Teknik Operasyonlar (Hangfire ile)
-
-- [x] Borç ve yatırım verilerini düzenli güncelleme (örn. gece job’u)
-- [x] Otomatik ödeme ve transfer job’ları
-- [x] Bildirim ve hatırlatma job’ları
-- [x] Veritabanı yedekleme/senkronizasyon job’ları
+- [x] Gold, silver, platinum prices (mock API to be written)  
+- [x] BIST100, NASDAQ, DAX index data  
+- [x] User portfolio tracking  
+- [ ] Investment suggestions (based on risk profile)
 
 ---
 
-## 🚧 TODO / Planlanan Büyük Geliştirmeler
+## 6️⃣ Automatic Payment Orders
 
-- [ ] Tek kullanıcının birden fazla hesabı olabilir.  
-  _Not: Şu an mimari tek hesaba göre kodlandı, zaman olunca entegre edilecek._
+- [x] Create automatic payment orders for rent, bills, phone, internet, etc.  
+- [x] List, edit, delete payment orders  
+- [x] Execute payments at specified times using Hangfire jobs
+
+---
+
+## 7️⃣ Subscription and Bill Tracking
+
+_Subscription management and automatic payment orders are similar, only the domain differs_
+
+- [x] List all user subscriptions (Netflix, Spotify, etc.)  
+- [x] Bill tracking screen (electricity, water, gas, internet, etc.)  
+- [x] Notifications/reminders for upcoming payment dates  
+- [x] Detect and suggest cancellation of unnecessary subscriptions
+
+---
+
+## 8️⃣ Goal-Based Budgeting and Savings Plans
+
+- [x] Create budget plans for user-defined goals (vacation, car, education)  
+- [x] Prepare monthly/weekly savings plans  
+- [x] Automatic saving rules (e.g., round-up: send change to savings account)
+
+---
+
+## 9️⃣ AI-Supported Financial Suggestions
+
+- [ ] Personal suggestions based on spending habits  
+- [ ] Budget overrun warnings  
+- [ ] Credit and investment simulations (how actions affect credit score)
+
+---
+
+## 🔄 Background and Technical Operations (with Hangfire)
+
+- [x] Regularly update debt and investment data (e.g., nightly job)  
+- [x] Automatic payment and transfer jobs  
+- [x] Notification and reminder jobs  
+- [x] Database backup/synchronization jobs
+
+---
+
+## 🚧 TODO / Planned Major Improvements
+
+- [ ] A single user can have multiple accounts.  
+  _Note: Currently, the architecture is coded for a single account; integration will be done when time allows._  
